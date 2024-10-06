@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exoplanet Explorer</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        header {
+            background-color: #007bff;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+
+        header img {
+            max-width: 150px; /* Adjust logo size */
+            height: auto;
+            margin-bottom: 10px;
+        }
+
+        main {
+            display: flex;
+            justify-content: space-around;
+            padding: 20px;
+        }
+
+        #exoplanet-list {
+            width: 30%;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        #exoplanet-details {
+            width: 60%;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            margin-top: 0;
+        }
+
+        #search-bar {
+            margin-bottom: 20px;
+        }
+
+        #search-input {
+            width: 100%;
+            padding: 10px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+        }
+
+        button {
+            margin-top: 10px;
+            padding: 10px 15px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <img src="nasa pic.png" alt="Exoplanet Explorer Logo"> <!-- Add logo here -->
+        <h1>Exoplanet Explorer</h1>
+        <p>Your gateway to explore exoplanet data.</p>
+    </header>
+    
+    <main>
+        <div id="exoplanet-list">
+            <div id="search-bar">
+                <input type="text" id="search-input" placeholder="Search for an exoplanet..." oninput="filterExoplanets()">
+            </div>
+            <div id="planet-results"></div>
+        </div>
+        <div id="exoplanet-details"></div>
+    </main>
+  
+    <footer>
+        <center><p>&copy; 2024 Exoplanet Explorer. All Rights Reserved.</p></center>
+    </footer>
+
+    <script>
+        const exoplanets = [
+            { name: 'Proxima Centauri b', distance: '4.24 light-years', mass: '1.17 Earth Masses', description: 'A rocky exoplanet located in the habitable zone of the red dwarf star Proxima Centauri.' },
+            { name: 'Kepler-186f', distance: '500 light-years', mass: '1.17 Earth Masses', description: 'The first Earth-size planet discovered in the habitable zone of another star.' },
+            { name: 'TRAPPIST-1e', distance: '39.6 light-years', mass: '0.92 Earth Masses', description: 'One of the seven Earth-sized planets orbiting the TRAPPIST-1 star.' },
+            { name: 'HD 209458 b', distance: '159 light-years', mass: '0.69 Jupiter Masses', description: 'The first exoplanet detected transiting its host star.' },
+        ];
+
+        function displayExoplanets(filteredPlanets = exoplanets) {
+            const planetResults = document.getElementById('planet-results');
+            planetResults.innerHTML = ''; // Clear previous results
+
+            filteredPlanets.forEach((planet, index) => {
+                const planetElement = document.createElement('div');
+                planetElement.innerHTML = `<h2>${planet.name}</h2><button onclick="showDetails(${index})">View Details</button>`;
+                planetResults.appendChild(planetElement);
+            });
+        }
+
+        function showDetails(index) {
+            const details = exoplanets[index];
+            const detailsDiv = document.getElementById('exoplanet-details');
+            detailsDiv.innerHTML = `
+                <h2>${details.name}</h2>
+                <p><strong>Distance:</strong> ${details.distance}</p>
+                <p><strong>Mass:</strong> ${details.mass}</p>
+                <p><strong>Description:</strong> ${details.description}</p>
+            `;
+        }
+
+        function filterExoplanets() {
+            const searchInput = document.getElementById('search-input').value.toLowerCase();
+            const filteredPlanets = exoplanets.filter(planet => planet.name.toLowerCase().includes(searchInput));
+            displayExoplanets(filteredPlanets);
+        }
+
+        // Load the exoplanets on page load
+        window.onload = displayExoplanets;
+    </script>
+</body>
+</html>
